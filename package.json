@@ -1,0 +1,53 @@
+{
+  "name": "acc-cdk-utils",
+  "version": "1.0.1",
+  "description": "Acloudcoder CDK Utils",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc"
+  },
+  "maintainers": [
+    {
+      "name": "Akshay Malik",
+      "email": "acloudcoder1@gmail.com",
+      "url": "profile.acloudcoder.com"
+    }
+  ],
+  "devDependencies": {
+    "@types/node": "13.13.4",
+    "aws-cdk": "^1.36.1",
+    "ts-node": "^8.9.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "superagent": "^5.2.2",
+    "superagent-logger": "^1.1.0",
+    "superagent-proxy": "^2.0.0",
+    "@types/shelljs": "^0.8.7",
+    "shelljs": "^0.8.4",
+    "empty-aws-bucket": "^1.0.10",
+    "aws-sdk-proxy": "^1.0.0",
+    "@jbuhacoff/java-properties": "^1.0.1",
+    "@types/node-fetch": "^2.5.7",
+    "java-properties": "^1.0.2",
+    "json2typescript": "^1.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acloudcoder/acc-cdk-utils.git"
+  },
+  "keywords": [
+    "cdk",
+    "aws"
+  ],
+  "author": "acloudcoder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acloudcoder/acc-cdk-utils/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "homepage": "https://github.com/acloudcoder/acc-cdk-utils#readme"
+}
