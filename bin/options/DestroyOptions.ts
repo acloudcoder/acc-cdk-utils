@@ -6,6 +6,7 @@ export enum ApprovalOptions {
 
 /**
  * POJO class for Destroy Options
+ * @author acloudcoder
  */
 export class DestroyOptions {
     public deployment: string;
@@ -25,9 +26,10 @@ export class DestroyOptions {
     public stackSeparator: string;
     public silent: boolean;
 
-    constructor(env: string, component: string) {
+    constructor(env: string, component: string, application: string) {
         this.env = env;
         this.component = component;
+        this.application = application;
     }
 
     protected static DefaultInit = (() => {

@@ -14,7 +14,7 @@ export interface HelperCDKUtils {
 
 /**
  * Helper Core Utility Functions for CDK
- * @author Akshay Malik
+ * @author acloudcoder
  */
 export class HelperCDKUtils {
 

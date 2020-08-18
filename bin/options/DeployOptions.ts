@@ -2,7 +2,7 @@ import {JsonObject} from "json2typescript";
 
 /**
  * Pojo class for Approval Options
- * @author Akshay Malik
+ * @author acloudcoder
  */
 export enum ApprovalOptions {
     NEVER = "never",
@@ -31,9 +31,10 @@ export class DeploymentOptions {
     public toolkitStackName: string;
     public toolkitBucketName: string;
 
-    constructor(env: string, component: string) {
+    constructor(env: string, component: string, application: string) {
         this.env = env;
         this.component = component;
+        this.application = application
     }
 
     protected static DefaultInit = (() => {

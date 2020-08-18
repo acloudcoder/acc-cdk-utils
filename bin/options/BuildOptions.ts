@@ -1,12 +1,17 @@
 /**
  * POJO Class for Build Options
- * @author Akshay Malik
+ * @author acloudcoder
  */
 export class BuildOptions {
 
     public label: string;
     public profile: string;
     public region: string;
+    public applicationPropertyPath: string;
+
+    constructor(applicationPropertyPath: string) {
+        this.applicationPropertyPath = applicationPropertyPath
+    }
 
     protected static DefaultInit = (() => {
         BuildOptions.prototype.label = "latest";

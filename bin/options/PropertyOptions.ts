@@ -5,7 +5,7 @@ export enum DeploymentOptionsEnum {
 
 /**
  * POJO Class for Env functions
- * @author Akshay Malik
+ * @author acloudcoder
  */
 export class PropertyOptions {
     public deployment: string;
@@ -16,15 +16,15 @@ export class PropertyOptions {
     public component: string;
     public matchProperties: boolean;
 
-    constructor(env: string, component: string, sourcePropertyPath: string) {
+    constructor(env: string, component: string, sourcePropertyPath: string, componentPropertyPath: string, applicationPropertyPath: string) {
         this.env = env;
         this.component = component;
         this.sourcePropertyPath = sourcePropertyPath;
+        this.componentPropertyPath = componentPropertyPath;
+        this.applicationPropertyPath = applicationPropertyPath
     }
 
     protected static DefaultInit = (() => {
-        PropertyOptions.prototype.applicationPropertyPath = "./properties/application.properties";
-        PropertyOptions.prototype.componentPropertyPath = "./../../properties/components/.";
         PropertyOptions.prototype.matchProperties = true;
         PropertyOptions.prototype.deployment = DeploymentOptionsEnum.DEPLOY_JOB.valueOf()
     })();

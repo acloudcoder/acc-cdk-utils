@@ -1,8 +1,11 @@
 {
   "name": "acc-cdk-utils",
-  "version": "1.0.1",
-  "description": "Acloudcoder CDK Utils",
+  "version": "1.1.6",
+  "description": "Utility framework to deploy CDK applications to enterprise solutions",
   "main": "index.js",
+  "files": [
+    "bin"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "tsc"
@@ -11,7 +14,7 @@
     {
       "name": "Akshay Malik",
       "email": "acloudcoder1@gmail.com",
-      "url": "profile.acloudcoder.com"
+      "url": "http://profile.acloudcoder.com"
     }
   ],
   "devDependencies": {
@@ -21,17 +24,19 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@jbuhacoff/java-properties": "^1.0.1",
+    "@types/node-fetch": "^2.5.7",
+    "@types/shelljs": "^0.8.7",
+    "aws-sdk-proxy": "^1.0.0",
+    "empty-aws-bucket": "^1.0.10",
+    "java-properties": "^1.0.2",
+    "json2typescript": "^1.4.1",
+    "shelljs": "^0.8.4",
     "superagent": "^5.2.2",
     "superagent-logger": "^1.1.0",
     "superagent-proxy": "^2.0.0",
-    "@types/shelljs": "^0.8.7",
-    "shelljs": "^0.8.4",
-    "empty-aws-bucket": "^1.0.10",
-    "aws-sdk-proxy": "^1.0.0",
-    "@jbuhacoff/java-properties": "^1.0.1",
-    "@types/node-fetch": "^2.5.7",
-    "java-properties": "^1.0.2",
-    "json2typescript": "^1.4.1"
+    "threads": "^1.6.3",
+    "tiny-worker": "^2.3.0"
   },
   "repository": {
     "type": "git",

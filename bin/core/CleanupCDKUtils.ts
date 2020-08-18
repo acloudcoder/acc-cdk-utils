@@ -1,55 +1,43 @@
 import {DestroyOptions} from "../options/DestroyOptions";
 import {ShellString} from "shelljs";
 import {CDKUtilsJsonData} from "../data/CDKUtilsJsonData";
-import {AbstractNamingStrategy} from "../strategy/AbstractStackNamingStrategy";
+import {AbstractNamingStrategy} from "../strategy/AbstractNamingStrategy";
 
 const emptyBucket = require('empty-aws-bucket');
 const AWS = require('aws-sdk-proxy');
 const shell = require('shelljs');
 
 /**
- * Cleanup CDK Utils Interface
- */
-export interface CleanupCDKUtils {
-}
-
-/**
  * Cleanup Core Utility Functions for CDK
- * @author Akshay Malik
+ * @author acloudcoder
  */
-export class CleanupCDKUtils {
+export class CleanupCDKUtils<X extends CDKUtilsJsonData> {
 
-    public namingStrategy: AbstractNamingStrategy<any, any>;
+    public namingStrategy: AbstractNamingStrategy<any, any, any>;
 
     /**
      * Constructor
      * @param stackNamingStrategy
      */
-    constructor(stackNamingStrategy: AbstractNamingStrategy<any, any>) {
+    constructor(stackNamingStrategy: AbstractNamingStrategy<any, any, any>) {
         this.namingStrategy = stackNamingStrategy;
     }
 
     /**
      * Usually, the Context allows replacing a Strategy object at runtime.
      */
-    public setStrategy(stackNamingStrategy: AbstractNamingStrategy<any, any>) {
+    public setStrategy(stackNamingStrategy: AbstractNamingStrategy<any, any, any>) {
         this.namingStrategy = stackNamingStrategy;
     }
-
 
     /**
      * Method to empty S3 Bucket
      * @param cdkUtilsJsonData
      * @param destroyOptions
      */
-    public emptyS3Bucket(cdkUtilsJsonData: CDKUtilsJsonData, destroyOptions: DestroyOptions) {
+    public emptyS3Bucket(cdkUtilsJsonData: X, destroyOptions: DestroyOptions) {
         console.log("Checking if stacks to destroy is present");
-        const bucketsToEmpty: string[] = [];
-        if (cdkUtilsJsonData.s3toEmpty) {
-            cdkUtilsJsonData.s3toEmpty.toString().split(",").forEach(function (stack: string) {
-                bucketsToEmpty.push(stack)
-            });
-        }
+        const bucketsToEmpty: string[] = this.namingStrategy.getBucketsToEmpty(cdkUtilsJsonData);
         if (!bucketsToEmpty) {
             console.log("No buckets data to be deleted..");
         } else {
@@ -70,24 +58,33 @@ export class CleanupCDKUtils {
 
     /**
      * Method to change delete permission for Aurora
+     * @param cdkUtilsJsonData
      * @param destroyOptions
-     * @param tableName
      * @param enableDeleteProtection
      */
-    public modifyDeletePermissionForAurora(destroyOptions: DestroyOptions, tableName: string, enableDeleteProtection: boolean) {
+    public modifyDeletePermissionForAurora(cdkUtilsJsonData: X, destroyOptions: DestroyOptions, enableDeleteProtection: boolean) {
         console.log("Checking if db is present");
-        console.log("Disabling delete protection for table : ");
         console.log("env:" + destroyOptions.env);
         console.log("component: " + destroyOptions.component);
-        const fullTableName = this.namingStrategy.generateStackNameForAurora(destroyOptions, tableName);
-        const deleteCommand = "aws rds modify-db-cluster --db-cluster-identifier=" + fullTableName + enableDeleteProtection ? " --deletion-protection" : "--no-deletion-protection";
-        const returnCode: ShellString = shell.exec(deleteCommand, {
-            silent: destroyOptions.silent
-        });
-        if (returnCode.code == 1) {
-            console.log("Failed to modify db cluster to disable delete protection for table : " + fullTableName)
+        const auroraDbToModifyDeleteProtection: string[] = this.namingStrategy.getAuroraDbToModifyDeleteProtection(cdkUtilsJsonData);
+        if (!auroraDbToModifyDeleteProtection) {
+            console.log("No buckets data to be deleted..");
         } else {
-            console.log("Successfully updated the db cluster")
+            console.log("Found : " + auroraDbToModifyDeleteProtection);
+            auroraDbToModifyDeleteProtection.forEach((db) => {
+                const fullTableName = this.namingStrategy.generateStackNameForAurora(destroyOptions, db);
+                console.log("Disabling delete protection for table : " + fullTableName);
+                const deleteCommand = "aws rds modify-db-cluster --db-cluster-identifier=".concat(fullTableName).concat(" ").concat(enableDeleteProtection ? " --deletion-protection" : "--no-deletion-protection");
+                console.log("Modify cluster command to run: " + deleteCommand);
+                const returnCode: ShellString = shell.exec(deleteCommand, {
+                    silent: destroyOptions.silent
+                });
+                if (returnCode.code == 1) {
+                    throw Error("Failed to modify db cluster to disable delete protection for table : " + fullTableName + returnCode.stderr);
+                } else {
+                    console.log("Successfully updated the db cluster for table :" + fullTableName);
+                }
+            });
         }
     }
 

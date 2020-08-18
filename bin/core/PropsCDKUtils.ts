@@ -13,7 +13,7 @@ export interface PropsCDKUtils {
 
 /**
  * Props  Core Utility Functions for CDK
- * @author Akshay Malik
+ * @author acloudcoder
  */
 export class PropsCDKUtils {
     /**
@@ -21,7 +21,7 @@ export class PropsCDKUtils {
      * @param propertyOptions
      */
     public handleProperties(propertyOptions: PropertyOptions): void {
-        var absolutePath;
+        let absolutePath;
         //checking if path is absolute or relative
         if (path.isAbsolute(propertyOptions.sourcePropertyPath)) {
             console.log("Path is absolute..using the same..");
@@ -31,7 +31,7 @@ export class PropsCDKUtils {
             absolutePath = path.resolve(__dirname, propertyOptions.sourcePropertyPath);
         }
         console.log("Absolute Path: " + absolutePath);
-        var fileToCheck;
+        let fileToCheck;
         //if deployment from job then always check external properties
         if (propertyOptions.deployment == DeploymentOptionsEnum.DEPLOY_JOB.valueOf()) {
             fileToCheck = propertyOptions.env.toUpperCase()
