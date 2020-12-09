@@ -1,6 +1,6 @@
 {
   "name": "acc-cdk-utils",
-  "version": "1.1.6",
+  "version": "1.1.9",
   "description": "Utility framework to deploy CDK applications to enterprise solutions",
   "main": "index.js",
   "files": [

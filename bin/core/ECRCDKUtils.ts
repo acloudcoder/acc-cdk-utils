@@ -36,7 +36,16 @@ export class ECRCDKUtils {
             if (fs.existsSync(absolutePath)) {
                 console.log("Application property file exist..");
                 console.log("Now fetching image digest..");
-                AWS.config.credentials = credentials;
+
+                if (!isEmpty(buildOptions.profile)) {
+                    console.log("Profile found : "  + buildOptions.profile)
+                    AWS.config.credentials = credentials;
+                }
+                else
+                {
+                    console.log("Profile not found...taking default role..")
+                }
+
                 if (repositoryName) {
                     const params = {
                         imageIds: [
@@ -48,10 +57,11 @@ export class ECRCDKUtils {
                     };
                     const ecr = new AWS.ECR({
                         apiVersion: '2015-09-21',
-                        credentials: credentials,
+                        //credentials: credentials,
                         region: buildOptions.region,
                         logger: console
                     });
+
                     ecr.batchGetImage(params, function (err: { stack: any; }, data: { images: { imageId: { imageDigest: string; }; }[]; }) {
                         if (err) {
                             console.log(err, err.stack);
@@ -75,4 +85,8 @@ export class ECRCDKUtils {
             throw Error("Path not absolute..exiting..");
         }
     }
+}
+
+function isEmpty(str: string | any[]) {
+    return !str || 0 === str.length;
 }
