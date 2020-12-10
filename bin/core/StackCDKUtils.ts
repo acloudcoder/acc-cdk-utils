@@ -95,7 +95,7 @@ export class StackCDKUtils<X extends CDKUtilsJsonData> {
         stacksToDestroy.forEach((stackName) => {
             console.log("Stack : " + stackName);
             console.log("Env : " + destroyOptions.env);
-            console.log("Component : " + destroyOptions.component);
+            console.log("Variant : " + destroyOptions.variant);
             let fullStackName = this.stackNamingStrategy.generateStackNameForDestroy(destroyOptions, stackName);
 
             console.log("Destroying stack: " + fullStackName);
