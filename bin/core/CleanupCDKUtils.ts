@@ -45,7 +45,7 @@ export class CleanupCDKUtils<X extends CDKUtilsJsonData> {
             bucketsToEmpty.forEach((bucket) => {
                 console.log("Bucket : " + bucket);
                 console.log("Env : " + destroyOptions.env);
-                console.log("Component : " + destroyOptions.component);
+                console.log("Variant : " + destroyOptions.variant);
                 let fullBucketName = this.namingStrategy.generateStackNameForBuckets(destroyOptions, bucket);
                 console.log("Deleting bucket content: " + fullBucketName);
                 const awsConfig = {
@@ -64,8 +64,8 @@ export class CleanupCDKUtils<X extends CDKUtilsJsonData> {
      */
     public modifyDeletePermissionForAurora(cdkUtilsJsonData: X, destroyOptions: DestroyOptions, enableDeleteProtection: boolean) {
         console.log("Checking if db is present");
-        console.log("env:" + destroyOptions.env);
-        console.log("component: " + destroyOptions.component);
+        console.log("Env:" + destroyOptions.env);
+        console.log("Variant: " + destroyOptions.variant);
         const auroraDbToModifyDeleteProtection: string[] = this.namingStrategy.getAuroraDbToModifyDeleteProtection(cdkUtilsJsonData);
         if (!auroraDbToModifyDeleteProtection) {
             console.log("No buckets data to be deleted..");

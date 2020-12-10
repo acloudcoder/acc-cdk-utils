@@ -11,7 +11,7 @@ export enum ApprovalOptions {
 export class DestroyOptions {
     public deployment: string;
     public env: string;
-    public component: string;
+    public variant: string;
     public application: string;
     public destroyDatabaseStack: boolean;
     public destroyStack: boolean;
@@ -26,9 +26,9 @@ export class DestroyOptions {
     public stackSeparator: string;
     public silent: boolean;
 
-    constructor(env: string, component: string, application: string) {
+    constructor(env: string, variant: string, application: string) {
         this.env = env;
-        this.component = component;
+        this.variant = variant;
         this.application = application;
     }
 

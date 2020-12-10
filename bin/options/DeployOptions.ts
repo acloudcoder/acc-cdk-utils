@@ -14,7 +14,7 @@ export class DeploymentOptions {
 
     public deployment: string;
     public env: string;
-    public component: string;
+    public variant: string;
     public application: string;
     public trace: boolean;
     public verbose: boolean;
@@ -31,9 +31,9 @@ export class DeploymentOptions {
     public toolkitStackName: string;
     public toolkitBucketName: string;
 
-    constructor(env: string, component: string, application: string) {
+    constructor(env: string, variant: string, application: string) {
         this.env = env;
-        this.component = component;
+        this.variant = variant;
         this.application = application
     }
 

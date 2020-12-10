@@ -38,7 +38,7 @@ export class PropsCDKUtils {
         }
         //else check internal props
         else if (propertyOptions.deployment == DeploymentOptionsEnum.LOCAL.valueOf()) {
-            fileToCheck = "application_" + propertyOptions.component.toUpperCase()
+            fileToCheck = "application_" + propertyOptions.variant.toUpperCase()
         }
         if (path.isAbsolute(absolutePath)) {
             console.log("Absolute path found...checking if directory structure exist.. ");
@@ -56,7 +56,7 @@ export class PropsCDKUtils {
                     //env specific properties
                     let propertySet = new Set<string>();
                     for (let key of values.getKeys()) {
-                        if (key.includes(propertyOptions.component.toUpperCase())) {
+                        if (key.includes(propertyOptions.variant.toUpperCase())) {
                             propertySet.add(key);
                         }
                     }
@@ -86,13 +86,13 @@ export class PropsCDKUtils {
                         console.log("Preparing application properties..");
                         //add properties to application.properties
                         propertySet.forEach(function (property) {
-                            fs.appendFile(propertyOptions.applicationPropertyPath, "\n" + (!isEmpty(property) ? property.toString().replace(propertyOptions.component.toUpperCase() + ".", "") : "") + "=" +
+                            fs.appendFile(propertyOptions.applicationPropertyPath, "\n" + (!isEmpty(property) ? property.toString().replace(propertyOptions.variant.toUpperCase() + ".", "") : "") + "=" +
                                 values.get(property), function (err: any) {
                                 if (err) throw err;
                             });
                         })
                     }
-                    console.log("Total properties found for component: " + propertyOptions.component + " is : " + propertySet.size)
+                    console.log("Total properties found for component: " + propertyOptions.variant + " is : " + propertySet.size)
                 } else {
                     throw Error("Required properties file : " + fileToCheck + ".properties " + " in directory : " + absolutePath + " not found")
                 }
@@ -111,18 +111,18 @@ export class PropsCDKUtils {
      */
     private matchPropertiesWithComponentProperties(envProperties: Set<string>, propertyOptions: PropertyOptions) {
         let absolutePath;
-        if (path.isAbsolute(propertyOptions.componentPropertyPath)) {
+        if (path.isAbsolute(propertyOptions.variantPropertyPath)) {
             console.log("Path is absolute..using the same..");
-            absolutePath = propertyOptions.componentPropertyPath;
+            absolutePath = propertyOptions.variantPropertyPath;
         } else {
             console.log("Path is relative..converting to absolute path: ");
-            absolutePath = path.resolve(__dirname, propertyOptions.componentPropertyPath);
+            absolutePath = path.resolve(__dirname, propertyOptions.variantPropertyPath);
         }
         //check if dir exist
         if (fs.existsSync(absolutePath)) {
             console.log("Directory exist : " + absolutePath);
             console.log("Checking if env property file exist for env : " + propertyOptions.env);
-            let filePath = absolutePath + "/application_" + propertyOptions.component.toUpperCase() + ".properties";
+            let filePath = absolutePath + "/application_" + propertyOptions.variant.toUpperCase() + ".properties";
 
             //checking if property file exist
             if (fs.existsSync(filePath)) {
@@ -135,9 +135,9 @@ export class PropsCDKUtils {
                 for (let key of values.getKeys()) {
                     componentProperties.add(key);
                 }
-                console.log("Total number of component: " + propertyOptions.component + " properties: " + componentProperties.size);
+                console.log("Total number of component: " + propertyOptions.variant + " properties: " + componentProperties.size);
                 console.log("Total number of env properties : " + envProperties.size);
-                console.log("Comparing both to check if any property is missing in env property for component : " + propertyOptions.component);
+                console.log("Comparing both to check if any property is missing in env property for component : " + propertyOptions.variant);
                 let notFound = new Set();
                 componentProperties.forEach(function (property: string) {
                     if (!envProperties.has(property)) {
@@ -153,7 +153,7 @@ export class PropsCDKUtils {
                 throw Error("Component property not found..." + filePath);
             }
         } else {
-            throw Error("Component properties directory not found..." + propertyOptions.componentPropertyPath);
+            throw Error("Component properties directory not found..." + propertyOptions.variantPropertyPath);
         }
     }
 }
