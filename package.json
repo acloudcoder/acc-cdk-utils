@@ -1,6 +1,6 @@
 {
   "name": "acc-cdk-utils",
-  "version": "1.1.9",
+  "version": "1.2.2",
   "description": "Utility framework to deploy CDK applications to enterprise solutions",
   "main": "index.js",
   "files": [
@@ -34,9 +34,10 @@
     "shelljs": "^0.8.4",
     "superagent": "^5.2.2",
     "superagent-logger": "^1.1.0",
-    "superagent-proxy": "^2.0.0",
+    "superagent-proxy": "3.0.0",
     "threads": "^1.6.3",
-    "tiny-worker": "^2.3.0"
+    "tiny-worker": "^2.3.0",
+    "pac-resolver": "^5.0.0"
   },
   "repository": {
     "type": "git",
